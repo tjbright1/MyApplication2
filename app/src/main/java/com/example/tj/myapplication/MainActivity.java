@@ -23,6 +23,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private EditText txtPassword;
     private TextView txtViewLoginMessage;
 
+	// KIRILL MADE EDIT HERE!
+
     private FirebaseAuth firebaseAuth;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
