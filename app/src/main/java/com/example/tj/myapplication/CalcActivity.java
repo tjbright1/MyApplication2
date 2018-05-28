@@ -1,9 +1,16 @@
 package com.example.tj.myapplication;
 
+import android.content.pm.PackageManager;
 import android.databinding.DataBindingUtil;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
+import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.tj.myapplication.databinding.CalcLayoutBinding;
@@ -34,6 +41,12 @@ public class CalcActivity extends AppCompatActivity {
 
     private char CURRENT_ACTION;
 
+    private Button buttonLocation;
+    private EditText editText;
+
+    private LocationManager locationManager;
+    private LocationListener locationListener;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,6 +57,49 @@ public class CalcActivity extends AppCompatActivity {
         firebaseAuth = FirebaseAuth.getInstance();
 
         dbReference = FirebaseDatabase.getInstance().getReference();
+
+        buttonLocation = (Button) findViewById(R.id.buttonLocation);
+        editText = (EditText) findViewById(R.id.editText);
+
+        locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+        locationListener = new LocationListener() {
+            @Override
+            public void onLocationChanged(Location location) {
+                editText.append(Double.toString(location.getLatitude()) + " + " + Double.toString(location.getLongitude()));
+            }
+
+            @Override
+            public void onStatusChanged(String provider, int status, Bundle extras) {
+
+            }
+
+            @Override
+            public void onProviderEnabled(String provider) {
+
+            }
+
+            @Override
+            public void onProviderDisabled(String provider) {
+
+            }
+        };
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+
+            if (checkSelfPermission(android.Manifest.permission.ACCESS_FINE_LOCATION)
+                    != PackageManager.PERMISSION_GRANTED &&
+                    checkSelfPermission(android.Manifest.permission.ACCESS_COARSE_LOCATION)
+                            != PackageManager.PERMISSION_GRANTED) {
+                requestPermissions(new String[]{
+                        android.Manifest.permission.ACCESS_COARSE_LOCATION,
+                        android.Manifest.permission.ACCESS_FINE_LOCATION,
+                        android.Manifest.permission.INTERNET }, 10);
+                return;
+            }
+        } else {
+            configButton();
+        }
+
 
         binding.buttonZero.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -224,4 +280,21 @@ public class CalcActivity extends AppCompatActivity {
         }
     }
 
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        switch (requestCode) {
+            case(10) :
+                if (grantResults.length >= 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    configButton();
+                }
+        }
+    }
+
+    public void configButton() {
+        binding.buttonLocation.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                locationManager.requestLocationUpdates("gps", 5000, 0, locationListener);
+            }
+        });
+    }
 }
