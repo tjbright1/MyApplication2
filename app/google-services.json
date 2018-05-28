@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "886763882590",
+    "firebase_url": "https://calcauthorization.firebaseio.com",
+    "project_id": "calcauthorization",
+    "storage_bucket": "calcauthorization.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:886763882590:android:21165cdd9933d097",
+        "android_client_info": {
+          "package_name": "com.example.tj.myapplication"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "886763882590-fdihf50k5ia2gie3p0u0qp79l27n738v.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "886763882590-fdihf50k5ia2gie3p0u0qp79l27n738v.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDOIaNg3wQ9PtAKDpqocMP_6yePo2GS9P4"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
